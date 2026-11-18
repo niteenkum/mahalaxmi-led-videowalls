@@ -1,26 +1,575 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  --color-t-bg: var(--t-bg);
+  --color-t-surface: var(--t-surface);
+  --color-t-card: var(--t-card);
+  --color-t-ink: var(--t-ink);
+  --color-t-muted: var(--t-muted);
+  --color-t-border: var(--t-border);
+  --color-t-accent: var(--t-accent);
+  --color-t-accent-fg: var(--t-accent-fg);
+  --color-t-accent-hover: var(--t-accent-hover);
+  --color-t-accent-soft: var(--t-accent-soft);
+  --color-t-stage: var(--t-stage);
+  --color-t-stage-card: var(--t-stage-card);
+  --color-t-stage-accent: var(--t-stage-accent);
+  --color-t-stage-accent-fg: var(--t-stage-accent-fg);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================================================
+   16 CURATED ARCHITECTURAL THEMES
+   ========================================================= */
+
+/* 1. Obsidian Monochrome (Default) */
+:root,
+[data-theme="obsidian-mono"] {
+  --t-bg: #ffffff;
+  --t-surface: #f4f4f5;
+  --t-card: #ffffff;
+  --t-ink: #09090b;
+  --t-muted: #52525b;
+  --t-border: #e4e4e7;
+  --t-accent: #09090b;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #27272a;
+  --t-accent-soft: #e4e4e7;
+  --t-stage: #09090b;
+  --t-stage-card: #131316;
+  --t-stage-accent: #ffffff;
+  --t-stage-accent-fg: #09090b;
+}
+
+/* 2. Samsung Royal Cobalt */
+[data-theme="samsung-cobalt"] {
+  --t-bg: #f4f7fd;
+  --t-surface: #e6eefb;
+  --t-card: #ffffff;
+  --t-ink: #09132c;
+  --t-muted: #415378;
+  --t-border: #cdd9f0;
+  --t-accent: #1428a0;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #0d1c75;
+  --t-accent-soft: #dbe6fe;
+  --t-stage: #060d21;
+  --t-stage-card: #0e1938;
+  --t-stage-accent: #60a5fa;
+  --t-stage-accent-fg: #060d21;
+}
+
+/* 3. Alpine Emerald */
+[data-theme="alpine-emerald"] {
+  --t-bg: #f2f8f6;
+  --t-surface: #e2f0ec;
+  --t-card: #ffffff;
+  --t-ink: #081c18;
+  --t-muted: #3f5e58;
+  --t-border: #c5ded7;
+  --t-accent: #0f766e;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #115e59;
+  --t-accent-soft: #ccfbf1;
+  --t-stage: #061411;
+  --t-stage-card: #0d241f;
+  --t-stage-accent: #2dd4bf;
+  --t-stage-accent-fg: #061411;
+}
+
+/* 4. Champagne & Espresso */
+[data-theme="champagne-luxe"] {
+  --t-bg: #f9f5ee;
+  --t-surface: #efe7da;
+  --t-card: #fffdf9;
+  --t-ink: #1e150d;
+  --t-muted: #685746;
+  --t-border: #dfd2be;
+  --t-accent: #7c4d1e;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #5e3914;
+  --t-accent-soft: #f3e5ce;
+  --t-stage: #140e09;
+  --t-stage-card: #211810;
+  --t-stage-accent: #eab66a;
+  --t-stage-accent-fg: #140e09;
+}
+
+/* 5. Leica Crimson */
+[data-theme="crimson-studio"] {
+  --t-bg: #faf6f6;
+  --t-surface: #f3eaea;
+  --t-card: #ffffff;
+  --t-ink: #170909;
+  --t-muted: #634b4b;
+  --t-border: #e5d2d2;
+  --t-accent: #dc2626;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #b91c1c;
+  --t-accent-soft: #fee2e2;
+  --t-stage: #120707;
+  --t-stage-card: #210e0e;
+  --t-stage-accent: #f87171;
+  --t-stage-accent-fg: #120707;
+}
+
+/* 6. Royal Amethyst */
+[data-theme="amethyst-royal"] {
+  --t-bg: #f7f4fe;
+  --t-surface: #ece6fc;
+  --t-card: #ffffff;
+  --t-ink: #150a2c;
+  --t-muted: #58497a;
+  --t-border: #d8cef3;
+  --t-accent: #6d28d9;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #5b21b6;
+  --t-accent-soft: #e9d5ff;
+  --t-stage: #0d061c;
+  --t-stage-card: #190d33;
+  --t-stage-accent: #c084fc;
+  --t-stage-accent-fg: #0d061c;
+}
+
+/* 7. Titanium Gunmetal */
+[data-theme="porsche-slate"] {
+  --t-bg: #eef2f6;
+  --t-surface: #e1e8f0;
+  --t-card: #ffffff;
+  --t-ink: #0f172a;
+  --t-muted: #475569;
+  --t-border: #cbd5e1;
+  --t-accent: #1e293b;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #0f172a;
+  --t-accent-soft: #cbd5e1;
+  --t-stage: #0b111e;
+  --t-stage-card: #152033;
+  --t-stage-accent: #94a3b8;
+  --t-stage-accent-fg: #0b111e;
+}
+
+/* 8. Burnished Copper */
+[data-theme="sunset-copper"] {
+  --t-bg: #fcf6f0;
+  --t-surface: #f5e9dc;
+  --t-card: #ffffff;
+  --t-ink: #211108;
+  --t-muted: #6e5242;
+  --t-border: #e8d2bf;
+  --t-accent: #c2410c;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #9a3412;
+  --t-accent-soft: #ffedd5;
+  --t-stage: #170b05;
+  --t-stage-card: #26140a;
+  --t-stage-accent: #fb923c;
+  --t-stage-accent-fg: #170b05;
+}
+
+/* 9. Nordic Fjord */
+[data-theme="nordic-ocean"] {
+  --t-bg: #f0f8fc;
+  --t-surface: #e0f0f8;
+  --t-card: #ffffff;
+  --t-ink: #071926;
+  --t-muted: #3f6075;
+  --t-border: #c2dfee;
+  --t-accent: #0284c7;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #0369a1;
+  --t-accent-soft: #bae6fd;
+  --t-stage: #05131e;
+  --t-stage-card: #0c2233;
+  --t-stage-accent: #38bdf8;
+  --t-stage-accent-fg: #05131e;
+}
+
+/* 10. Imperial Burgundy */
+[data-theme="rose-burgundy"] {
+  --t-bg: #fcf4f6;
+  --t-surface: #f5e4e9;
+  --t-card: #ffffff;
+  --t-ink: #240811;
+  --t-muted: #6e4552;
+  --t-border: #e8cad3;
+  --t-accent: #9f1239;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #881337;
+  --t-accent-soft: #fecdd3;
+  --t-stage: #17060b;
+  --t-stage-card: #290c15;
+  --t-stage-accent: #fb7185;
+  --t-stage-accent-fg: #17060b;
+}
+
+/* 11. Stealth Dark Mono (Full Dark) */
+[data-theme="arctic-stealth"] {
+  --t-bg: #0a0a0d;
+  --t-surface: #121217;
+  --t-card: #18181f;
+  --t-ink: #f4f4f5;
+  --t-muted: #a1a1aa;
+  --t-border: #272732;
+  --t-accent: #ffffff;
+  --t-accent-fg: #09090b;
+  --t-accent-hover: #e4e4e7;
+  --t-accent-soft: #272732;
+  --t-stage: #050507;
+  --t-stage-card: #131318;
+  --t-stage-accent: #ffffff;
+  --t-stage-accent-fg: #09090b;
+}
+
+/* 12. Onyx & Champagne Gold (Full Dark) */
+[data-theme="onyx-gold"] {
+  --t-bg: #0c0a08;
+  --t-surface: #15120e;
+  --t-card: #1e1914;
+  --t-ink: #faf7f2;
+  --t-muted: #b0a494;
+  --t-border: #332b21;
+  --t-accent: #d4af37;
+  --t-accent-fg: #0c0a08;
+  --t-accent-hover: #e6c350;
+  --t-accent-soft: #2e2514;
+  --t-stage: #070604;
+  --t-stage-card: #17130e;
+  --t-stage-accent: #e5c158;
+  --t-stage-accent-fg: #0c0a08;
+}
+
+/* 13. Cyber Neon Cyan (Full Dark) */
+[data-theme="midnight-cyber"] {
+  --t-bg: #060b14;
+  --t-surface: #0c1526;
+  --t-card: #121f36;
+  --t-ink: #f0f9ff;
+  --t-muted: #94a3b8;
+  --t-border: #1e3252;
+  --t-accent: #06b6d4;
+  --t-accent-fg: #041016;
+  --t-accent-hover: #22d3ee;
+  --t-accent-soft: #0e2d3d;
+  --t-stage: #03070d;
+  --t-stage-card: #0b1526;
+  --t-stage-accent: #22d3ee;
+  --t-stage-accent-fg: #041016;
+}
+
+/* 14. Emerald Carbon Dark (Full Dark) */
+[data-theme="matrix-emerald"] {
+  --t-bg: #050e0b;
+  --t-surface: #0a1914;
+  --t-card: #10261e;
+  --t-ink: #ecfdf5;
+  --t-muted: #93b3a7;
+  --t-border: #1c3d31;
+  --t-accent: #10b981;
+  --t-accent-fg: #04130d;
+  --t-accent-hover: #34d399;
+  --t-accent-soft: #0f3024;
+  --t-stage: #030806;
+  --t-stage-card: #0b1a14;
+  --t-stage-accent: #34d399;
+  --t-stage-accent-fg: #04130d;
+}
+
+/* 15. Ultraviolet Studio (Full Dark) */
+[data-theme="nebula-violet"] {
+  --t-bg: #090514;
+  --t-surface: #120b26;
+  --t-card: #1b1138;
+  --t-ink: #f5f3ff;
+  --t-muted: #afa3cc;
+  --t-border: #31215c;
+  --t-accent: #8b5cf6;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #a78bfa;
+  --t-accent-soft: #28194d;
+  --t-stage: #05030c;
+  --t-stage-card: #140c29;
+  --t-stage-accent: #c084fc;
+  --t-stage-accent-fg: #090514;
+}
+
+/* 16. McLaren Carbon Ember (Full Dark) */
+[data-theme="volcanic-ember"] {
+  --t-bg: #0d0806;
+  --t-surface: #17100c;
+  --t-card: #221712;
+  --t-ink: #fff7ed;
+  --t-muted: #b5a195;
+  --t-border: #38261d;
+  --t-accent: #f97316;
+  --t-accent-fg: #ffffff;
+  --t-accent-hover: #fb923c;
+  --t-accent-soft: #361d0e;
+  --t-stage: #070403;
+  --t-stage-card: #17100c;
+  --t-stage-accent: #fb923c;
+  --t-stage-accent-fg: #0d0806;
+}
+
+/* =========================================================
+   GUARANTEED NATIVE CSS THEME UTILITIES (Turbopack & Webpack)
+   ========================================================= */
+.bg-t-bg {
+  background-color: var(--t-bg);
+}
+.bg-t-bg\/90 {
+  background-color: color-mix(in srgb, var(--t-bg) 90%, transparent);
+}
+.bg-t-surface {
+  background-color: var(--t-surface);
+}
+.bg-t-surface\/50 {
+  background-color: color-mix(in srgb, var(--t-surface) 50%, transparent);
+}
+.bg-t-surface\/70 {
+  background-color: color-mix(in srgb, var(--t-surface) 70%, transparent);
+}
+.bg-t-card {
+  background-color: var(--t-card);
+}
+.bg-t-card\/75 {
+  background-color: color-mix(in srgb, var(--t-card) 75%, transparent);
+}
+.bg-t-accent {
+  background-color: var(--t-accent);
+}
+.bg-t-accent-fg {
+  background-color: var(--t-accent-fg);
+}
+.bg-t-accent-fg\/45 {
+  background-color: color-mix(in srgb, var(--t-accent-fg) 45%, transparent);
+}
+.bg-t-accent-soft {
+  background-color: var(--t-accent-soft);
+}
+.bg-t-stage {
+  background-color: var(--t-stage);
+}
+.bg-t-stage-card {
+  background-color: var(--t-stage-card);
+}
+.bg-t-stage-accent {
+  background-color: var(--t-stage-accent);
+}
+
+.text-t-ink {
+  color: var(--t-ink);
+}
+.text-t-muted {
+  color: var(--t-muted);
+}
+.text-t-accent {
+  color: var(--t-accent);
+}
+.text-t-accent-fg {
+  color: var(--t-accent-fg);
+}
+.text-t-stage-accent {
+  color: var(--t-stage-accent);
+}
+.text-t-stage-accent-fg {
+  color: var(--t-stage-accent-fg);
+}
+
+.border-t-border {
+  border-color: var(--t-border);
+}
+.border-t-border\/80 {
+  border-color: color-mix(in srgb, var(--t-border) 80%, transparent);
+}
+.border-t-accent {
+  border-color: var(--t-accent);
+}
+.border-t-stage-accent {
+  border-color: var(--t-stage-accent);
+}
+
+.hover\:bg-t-accent:hover {
+  background-color: var(--t-accent);
+}
+.hover\:bg-t-accent-hover:hover {
+  background-color: var(--t-accent-hover);
+}
+.hover\:bg-t-card:hover {
+  background-color: var(--t-card);
+}
+.hover\:bg-t-surface:hover {
+  background-color: var(--t-surface);
+}
+.hover\:bg-t-stage-accent:hover {
+  background-color: var(--t-stage-accent);
+}
+.hover\:text-t-ink:hover {
+  color: var(--t-ink);
+}
+.hover\:text-t-accent-fg:hover {
+  color: var(--t-accent-fg);
+}
+.hover\:text-t-stage-accent:hover {
+  color: var(--t-stage-accent);
+}
+.hover\:text-t-stage-accent-fg:hover {
+  color: var(--t-stage-accent-fg);
+}
+.hover\:border-t-accent:hover {
+  border-color: var(--t-accent);
+}
+.hover\:border-t-accent\/50:hover {
+  border-color: color-mix(in srgb, var(--t-accent) 50%, transparent);
+}
+.hover\:border-t-accent\/60:hover {
+  border-color: color-mix(in srgb, var(--t-accent) 60%, transparent);
+}
+.hover\:border-t-stage-accent:hover {
+  border-color: var(--t-stage-accent);
+}
+
+.focus\:border-t-accent:focus {
+  border-color: var(--t-accent);
+}
+.focus\:bg-t-card:focus {
+  background-color: var(--t-card);
+}
+.placeholder\:text-t-muted\/60::placeholder {
+  color: color-mix(in srgb, var(--t-muted) 60%, transparent);
+}
+.selection\:bg-t-accent ::selection,
+.selection\:bg-t-accent::selection {
+  background-color: var(--t-accent);
+}
+.selection\:text-t-accent-fg ::selection,
+.selection\:text-t-accent-fg::selection {
+  color: var(--t-accent-fg);
+}
+
+/* Gradient stop helpers for Hero & Hardware stages */
+.from-t-stage {
+  --tw-gradient-from: var(--t-stage);
+}
+.from-t-stage-card {
+  --tw-gradient-from: var(--t-stage-card);
+}
+.via-t-stage\/75 {
+  --tw-gradient-via: color-mix(in srgb, var(--t-stage) 75%, transparent);
+}
+.to-t-stage\/40 {
+  --tw-gradient-to: color-mix(in srgb, var(--t-stage) 40%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background: var(--t-bg);
+  color: var(--t-ink);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 34s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes progress-fill {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.animate-progress-4500 {
+  transform-origin: left;
+  animation: progress-fill 4.5s linear forwards;
+}
+
+.animate-progress-5500 {
+  transform-origin: left;
+  animation: progress-fill 5.5s linear forwards;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+input[type="range"].led-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--t-border);
+  outline: none;
+}
+
+input[type="range"].led-slider-dark {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  outline: none;
+}
+
+input[type="range"].led-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--t-accent);
+  border: 3px solid var(--t-card);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+
+input[type="range"].led-slider-dark::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--t-stage-accent);
+  border: 3px solid var(--t-stage);
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease;
+}
+
+input[type="range"].led-slider::-webkit-slider-thumb:hover,
+input[type="range"].led-slider-dark::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
 }
