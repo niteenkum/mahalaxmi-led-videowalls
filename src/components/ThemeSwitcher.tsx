@@ -6,17 +6,31 @@ import { THEMES } from "@/data/themes";
 
 export default function ThemeSwitcher() {
   const [activeTheme, setActiveTheme] = useState("obsidian-mono");
+  const [saving, setSaving] = useState(false);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("mahalaxmi-theme");
-    if (saved && THEMES.some((t) => t.id === saved)) {
-      setActiveTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else {
-      document.documentElement.setAttribute("data-theme", "obsidian-mono");
-    }
+    let cancelled = false;
+    fetch("/api/theme", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { themeId?: string } | null) => {
+        if (cancelled) return;
+        const themeId =
+          data?.themeId && THEMES.some((t) => t.id === data.themeId)
+            ? data.themeId
+            : "obsidian-mono";
+        setActiveTheme(themeId);
+        document.documentElement.setAttribute("data-theme", themeId);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          document.documentElement.setAttribute("data-theme", "obsidian-mono");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -39,10 +53,27 @@ export default function ThemeSwitcher() {
     };
   }, []);
 
-  const applyTheme = (id: string) => {
+  const applyTheme = async (id: string) => {
+    const prev = activeTheme;
     setActiveTheme(id);
     document.documentElement.setAttribute("data-theme", id);
-    localStorage.setItem("mahalaxmi-theme", id);
+    setSaving(true);
+    try {
+      const res = await fetch("/api/theme", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ themeId: id }),
+      });
+      if (!res.ok) {
+        setActiveTheme(prev);
+        document.documentElement.setAttribute("data-theme", prev);
+      }
+    } catch {
+      setActiveTheme(prev);
+      document.documentElement.setAttribute("data-theme", prev);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const cycleNextTheme = () => {
@@ -99,7 +130,9 @@ export default function ThemeSwitcher() {
                 Theme Studio (16 Presets)
               </p>
               <p className="text-[11px] text-t-muted">
-                Instant live preview — saved automatically
+                {saving
+                  ? "Saving theme to database..."
+                  : "Saved to database — applies to public site"}
               </p>
             </div>
             <span className="rounded-full bg-t-accent px-2.5 py-0.5 font-mono text-[10px] font-bold text-t-accent-fg">

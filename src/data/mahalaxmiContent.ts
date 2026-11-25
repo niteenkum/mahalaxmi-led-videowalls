@@ -1,3 +1,16 @@
+export interface ProductVariant {
+  id: string;
+  badgeLabel: string;
+  title: string;
+  tag: string;
+  pitchRange: string;
+  brightness: string;
+  image: string;
+  summary: string;
+  features: string[];
+  idealFor: string;
+}
+
 export interface ProductItem {
   id: string;
   title: string;
@@ -8,6 +21,7 @@ export interface ProductItem {
   summary: string;
   features: string[];
   idealFor: string;
+  variants?: ProductVariant[];
 }
 
 export interface ApplicationItem {
@@ -32,25 +46,26 @@ export interface VisionaryMember {
   role: string;
   initials: string;
   department: string;
+  image: string;
 }
 
 export const PRODUCTS_DATA: ProductItem[] = [
   {
-    id: "l-shaped-outdoor",
-    title: "L-Shaped Outdoor LED Display",
-    tag: "3D Anamorphic Ready",
+    id: "curved-flexible-outdoor",
+    title: "Curved / Flexible Outdoor LED Display",
+    tag: "3D Curved & Anamorphic",
     pitchRange: "P4 / P6 / P8",
     brightness: "6,500+ Nits",
     image: "/images/outdoor-3d-billboard.jpg",
     summary:
-      "Bring your advertising to life with our robust 90° L-Shaped Outdoor LED Displays. Engineered to withstand harsh elements and deliver naked-eye 3D depth day or night.",
+      "Bring architectural facades to life with our Curved, Flexible & 90° Outdoor LED Displays. Engineered to wrap seamlessly around building corners, columns, and contours with naked-eye 3D depth day or night.",
     features: [
       "IP65 Weatherproof & Monsoon Sealed",
       "6,500+ Nits Unparalleled Daylight Brightness",
-      "Seamless 90° Corner Cabinet Splicing",
+      "Seamless Curved, Flexible & 90° Corner Splicing",
       "Long-Lasting Commercial Durability",
     ],
-    idealFor: "City junctions, stadiums, roadside advertisements & public landmarks",
+    idealFor: "City junctions, curved building facades, stadiums & public landmarks",
   },
   {
     id: "indoor-fixed",
@@ -77,7 +92,7 @@ export const PRODUCTS_DATA: ProductItem[] = [
     brightness: "1,000 Nits",
     image: "/images/led-standee-van.jpg",
     summary:
-      "Elevate high-traffic environments with sleek freestanding LED Digital Standees. Instant USB, Wi-Fi, and cloud CMS playback that stops walk-in footfall.",
+      "Elevate high-traffic indoor environments with sleek freestanding LED Digital Standees. Instant USB, Wi-Fi, and cloud CMS playback that stops walk-in footfall.",
     features: [
       "Ultra-Slim Tempered Glass Frame",
       "High-Resolution Vibrant Color Accuracy",
@@ -85,23 +100,103 @@ export const PRODUCTS_DATA: ProductItem[] = [
       "Portable Lockable Base for Easy Repositioning",
     ],
     idealFor: "Retail stores, hotel lobbies, exhibitions, clinics & corporate events",
+    variants: [
+      {
+        id: "indoor-standees",
+        badgeLabel: "Indoor Standees",
+        title: "Digital Standees",
+        tag: "Plug & Play Totem",
+        pitchRange: "P1.8 / P2.5",
+        brightness: "1,000 Nits",
+        image: "/images/led-standee-van.jpg",
+        summary:
+          "Elevate high-traffic indoor environments with sleek freestanding LED Digital Standees. Instant USB, Wi-Fi, and cloud CMS playback that stops walk-in footfall.",
+        features: [
+          "Ultra-Slim Tempered Glass Frame",
+          "High-Resolution Vibrant Color Accuracy",
+          "Remote Cloud CMS & USB Plug-and-Play",
+          "Portable Lockable Base for Easy Repositioning",
+        ],
+        idealFor:
+          "Retail stores, hotel lobbies, exhibitions, clinics & corporate events",
+      },
+      {
+        id: "outdoor-standees",
+        badgeLabel: "Outdoor • Waterproof",
+        title: "Outdoor Digital Standees",
+        tag: "Waterproof • IP65",
+        pitchRange: "P2 / P2.5 / P3 / P4",
+        brightness: "5,500+ Nits • Waterproof",
+        image: "/images/prod-outdoor-standee.jpg",
+        summary:
+          "Command open-air footfall rain or shine with Waterproof Outdoor Digital Standees (P2 / P2.5 / P3 / P4). Ultra-bright, weather-sealed freestanding LED totems engineered for direct sunlight and monsoon resilience.",
+        features: [
+          "100% Waterproof IP65 Weather-Sealed Enclosure",
+          "Outdoor Pitch Options: P2 / P2.5 / P3 / P4",
+          "5,500+ Nits Sunlight-Legible Anti-Glare Display",
+          "Heavy-Duty Anti-Corrosion Base & Cloud CMS",
+        ],
+        idealFor:
+          "High-street storefronts, petrol pumps, outdoor plazas, malls & open-air events",
+      },
+    ],
   },
   {
-    id: "digital-billboards",
-    title: "Digital Billboards",
+    id: "outdoor-pole-billboards",
+    title: "Outdoor Pole Mounting Screen",
     tag: "DOOH Unipole Series",
-    pitchRange: "P6 / P8 / P10",
+    pitchRange: "P4 / P6 / P8 / P10",
     brightness: "7,000 Nits",
     image: "/images/prod-digital-billboard.jpg",
     summary:
-      "Elevate your outdoor media ROI with dynamic large-format Digital Billboards built for maximum highway visibility, captivating video, and real-time campaign updates.",
+      "Maximize roadside media ROI with engineered Outdoor Pole Mounting Screens. Built for street poles, highway unipoles, and urban corridors with ultra-bright visuals and real-time cloud campaign updates.",
     features: [
-      "High-Impact Sunlight-Legible Visuals",
-      "Real-Time Remote Ad Scheduling",
-      "Heavy-Duty Structural MS/Aluminum Cabinets",
-      "Smart Auto-Brightness Ambient Sensors",
+      "Wind-Load Certified Unipole & Street-Pole Mounting",
+      "P4 / P6 / P8 / P10 Pitch Flexibility",
+      "7,000 Nits High-Impact Sunlight-Legible Visuals",
+      "Smart Auto-Brightness Sensors & Remote Scheduling",
     ],
-    idealFor: "High-traffic urban expressways, commercial avenues & transit hubs",
+    idealFor: "Highway unipoles, city street poles, arterial medians & transit hubs",
+    variants: [
+      {
+        id: "outdoor-pole-mounting",
+        badgeLabel: "Pole Mounting Screen",
+        title: "Outdoor Pole Mounting Screen",
+        tag: "DOOH Unipole Series",
+        pitchRange: "P4 / P6 / P8 / P10",
+        brightness: "7,000 Nits",
+        image: "/images/prod-digital-billboard.jpg",
+        summary:
+          "Maximize roadside media ROI with engineered Outdoor Pole Mounting Screens. Built for street poles, highway unipoles, and urban corridors with ultra-bright visuals and real-time cloud campaign updates.",
+        features: [
+          "Wind-Load Certified Unipole & Street-Pole Mounting",
+          "P4 / P6 / P8 / P10 Pitch Flexibility",
+          "7,000 Nits High-Impact Sunlight-Legible Visuals",
+          "Smart Auto-Brightness Sensors & Remote Scheduling",
+        ],
+        idealFor:
+          "Highway unipoles, city street poles, arterial medians & transit hubs",
+      },
+      {
+        id: "digital-billboards",
+        badgeLabel: "Digital Billboards",
+        title: "Digital Billboards",
+        tag: "Large-Format DOOH",
+        pitchRange: "P4 / P6 / P8 / P10",
+        brightness: "7,000+ Nits",
+        image: "/images/prod-highway-billboard.jpg",
+        summary:
+          "Dominate skylines and expressways with monumental large-format Digital Billboards engineered for structural steel hoardings, rooftops, and gantry installations with seamless 24/7 cloud ad playback.",
+        features: [
+          "Large-Format Structural Steel & Rooftop Integration",
+          "Real-Time Multi-Advertiser Remote Ad Scheduling",
+          "Heavy-Duty IP65 MS/Aluminum Weatherproof Cabinets",
+          "Smart Ambient Auto-Brightness & Power Management",
+        ],
+        idealFor:
+          "Expressway gantries, commercial rooftops, city squares & prime OOH hoardings",
+      },
+    ],
   },
   {
     id: "advanced-transparent",
@@ -136,6 +231,40 @@ export const PRODUCTS_DATA: ProductItem[] = [
       "Fast Modular Installation & Maintenance",
     ],
     idealFor: "Luxury boutiques, jewellery storefronts, auto showrooms & atriums",
+  },
+  {
+    id: "drone-led-walls",
+    title: "Drone LED Walls",
+    tag: "Aerial Sky Media",
+    pitchRange: "P10 / P16 / P25 Mesh",
+    brightness: "5,500+ Nits",
+    image: "/images/prod-drone-led-wall.jpg",
+    summary:
+      "Take brand storytelling into the sky with ultra-lightweight airborne Drone LED Walls. Built with wind-permeable flexible LED mesh for high-impact aerial activations, concerts, and grand launches.",
+    features: [
+      "Ultra-Lightweight Carbon & Flexible Mesh Screen",
+      "Wind-Permeable Aerodynamic Grid Architecture",
+      "5,500+ Nits High-Visibility Dusk & Night Brilliance",
+      "Wireless Real-Time Video & Brand Sync Control",
+    ],
+    idealFor: "Grand product launches, mega concerts, festivals, stadiums & city skyline shows",
+  },
+  {
+    id: "mobile-van-led-wall",
+    title: "Mobile Van LED Wall",
+    tag: "Roadshow Fleet Series",
+    pitchRange: "P3 / P4 / P6",
+    brightness: "6,000+ Nits",
+    image: "/images/prod-mobile-van-led.jpg",
+    summary:
+      "Take dynamic outdoor advertising straight to your audience with turnkey Mobile Van LED Walls. Featuring hydraulic-elevated IP65 outdoor LED screens, onboard silent power, and integrated PA audio.",
+    features: [
+      "3-Side or Hydraulic-Elevated IP65 Outdoor Screens",
+      "6,000+ Nits Crystal-Clear Direct-Sunlight Display",
+      "Built-In Silent DG Power & Integrated PA Sound",
+      "Live Camera Feed, Cloud CMS & GPS Route Tracking",
+    ],
+    idealFor: "Brand roadshows, product launches, election campaigns, real estate & rural drives",
   },
 ];
 
@@ -257,30 +386,21 @@ export const VISIONARIES_TEAM: VisionaryMember[] = [
     role: "Founder & CEO",
     initials: "RS",
     department: "Executive Leadership",
-  },
-  {
-    name: "Ishank Dhamgaye",
-    role: "Technical Head",
-    initials: "ID",
-    department: "Display Engineering",
+    image: "/images/team-ramandeep.jpg",
   },
   {
     name: "Rita Chinchghare",
     role: "Managing Head",
     initials: "RC",
     department: "Operations & Delivery",
+    image: "/images/team-rita.jpg",
   },
   {
     name: "G. Suresh Balkrishna",
     role: "Account Head",
     initials: "SB",
     department: "Finance & Enterprise Accounts",
-  },
-  {
-    name: "Ayush Bhalekar",
-    role: "Technical Advisor",
-    initials: "AB",
-    department: "Systems Architecture",
+    image: "/images/team-suresh.jpg",
   },
 ];
 

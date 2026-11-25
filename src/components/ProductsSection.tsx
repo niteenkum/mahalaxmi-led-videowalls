@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -20,26 +20,46 @@ interface ProductsSectionProps {
 
 export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
   const [activeIdx, setActiveIdx] = useState(0);
+  const [activeVariantIdx, setActiveVariantIdx] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   const activeProduct = PRODUCTS_DATA[activeIdx];
+  const variants = activeProduct.variants;
+  const activeDisplay =
+    variants && variants[activeVariantIdx]
+      ? variants[activeVariantIdx]
+      : activeProduct;
+
+  const handleNext = useCallback(() => {
+    const currentVariants = PRODUCTS_DATA[activeIdx].variants;
+    if (currentVariants && activeVariantIdx + 1 < currentVariants.length) {
+      setActiveVariantIdx((v) => v + 1);
+      return;
+    }
+    setActiveIdx((prev) => (prev + 1) % PRODUCTS_DATA.length);
+    setActiveVariantIdx(0);
+  }, [activeIdx, activeVariantIdx]);
+
+  const handlePrev = useCallback(() => {
+    if (variants && activeVariantIdx > 0) {
+      setActiveVariantIdx((v) => v - 1);
+      return;
+    }
+    const prevIdx = (activeIdx - 1 + PRODUCTS_DATA.length) % PRODUCTS_DATA.length;
+    const prevVariants = PRODUCTS_DATA[prevIdx].variants;
+    setActiveIdx(prevIdx);
+    setActiveVariantIdx(prevVariants ? prevVariants.length - 1 : 0);
+  }, [activeIdx, activeVariantIdx, variants]);
 
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(() => {
-      setActiveIdx((prev) => (prev + 1) % PRODUCTS_DATA.length);
-    }, 4500);
+    const timer = setInterval(handleNext, 4500);
     return () => clearInterval(timer);
-  }, [isPaused, activeIdx]);
+  }, [isPaused, handleNext]);
 
-  const handlePrev = () => {
-    setActiveIdx(
-      (prev) => (prev - 1 + PRODUCTS_DATA.length) % PRODUCTS_DATA.length
-    );
-  };
-
-  const handleNext = () => {
-    setActiveIdx((prev) => (prev + 1) % PRODUCTS_DATA.length);
+  const handleSelectProduct = (idx: number) => {
+    setActiveIdx(idx);
+    setActiveVariantIdx(0);
   };
 
   return (
@@ -80,7 +100,8 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
               )}
             </button>
             <span className="font-mono text-xs font-bold text-t-muted mx-1.5">
-              0{activeIdx + 1} / 0{PRODUCTS_DATA.length}
+              {String(activeIdx + 1).padStart(2, "0")} /{" "}
+              {String(PRODUCTS_DATA.length).padStart(2, "0")}
             </span>
             <button
               type="button"
@@ -111,7 +132,7 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
             <div className="relative min-h-[320px] sm:min-h-[450px] lg:col-span-7 overflow-hidden bg-t-stage">
               <AnimatePresence mode="sync">
                 <motion.div
-                  key={activeProduct.id}
+                  key={activeDisplay.id}
                   initial={{ opacity: 0, scale: 1.06 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
@@ -119,8 +140,8 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
                   className="absolute inset-0"
                 >
                   <Image
-                    src={activeProduct.image}
-                    alt={activeProduct.title}
+                    src={activeDisplay.image}
+                    alt={activeDisplay.title}
                     fill
                     className="object-cover"
                     sizes="(max-width: 1024px) 100vw, 60vw"
@@ -131,15 +152,15 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
 
               <div className="absolute top-5 left-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/75 px-4 py-1.5 font-mono text-xs font-semibold text-white backdrop-blur-md">
                 <Sparkles className="h-3.5 w-3.5 text-t-stage-accent" />
-                {activeProduct.tag}
+                {activeDisplay.tag}
               </div>
 
               <div className="absolute bottom-5 left-5 right-5 z-10 flex flex-wrap items-center gap-3">
                 <span className="rounded-xl bg-t-stage-accent px-4 py-1.5 font-mono text-xs font-bold text-t-stage-accent-fg shadow-lg">
-                  Pitch: {activeProduct.pitchRange}
+                  Pitch: {activeDisplay.pitchRange}
                 </span>
                 <span className="rounded-xl border border-white/20 bg-black/80 px-4 py-1.5 font-mono text-xs font-semibold text-white backdrop-blur-md">
-                  Luminance: {activeProduct.brightness}
+                  Luminance: {activeDisplay.brightness}
                 </span>
               </div>
             </div>
@@ -147,7 +168,7 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
             <div className="flex flex-col justify-between p-7 sm:p-10 lg:col-span-5 bg-t-card">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={activeProduct.id}
+                  key={activeDisplay.id}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
@@ -155,21 +176,46 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
                   className="flex flex-1 flex-col justify-between"
                 >
                   <div>
-                    <span className="font-mono text-xs font-bold uppercase tracking-widest text-t-accent">
-                      Product 0{activeIdx + 1}
-                    </span>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className="font-mono text-xs font-bold uppercase tracking-widest text-t-accent">
+                        Product {String(activeIdx + 1).padStart(2, "0")}
+                      </span>
+
+                      {variants && variants.length > 1 && (
+                        <div className="inline-flex flex-wrap items-center gap-1.5">
+                          {variants.map((variant, vIdx) => {
+                            const isVariantActive = vIdx === activeVariantIdx;
+                            return (
+                              <button
+                                key={variant.id}
+                                type="button"
+                                onClick={() => setActiveVariantIdx(vIdx)}
+                                className={`rounded-full px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider transition ${
+                                  isVariantActive
+                                    ? "bg-t-accent text-t-accent-fg shadow-xs"
+                                    : "border border-t-border bg-t-surface text-t-muted hover:border-t-accent hover:text-t-ink"
+                                }`}
+                              >
+                                {variant.badgeLabel}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+
                     <h3 className="font-display mt-2 text-2xl font-bold text-t-ink sm:text-3xl">
-                      {activeProduct.title}
+                      {activeDisplay.title}
                     </h3>
                     <p className="mt-3 text-sm sm:text-base leading-relaxed text-t-muted">
-                      {activeProduct.summary}
+                      {activeDisplay.summary}
                     </p>
 
                     <div className="mt-6 space-y-2.5 border-t border-t-border pt-5">
                       <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-t-muted">
                         Key Engineering Highlights
                       </p>
-                      {activeProduct.features.map((feat) => (
+                      {activeDisplay.features.map((feat) => (
                         <div
                           key={feat}
                           className="flex items-start gap-2.5 text-sm font-medium text-t-ink"
@@ -186,12 +232,12 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
                   <div className="mt-8 border-t border-t-border pt-5">
                     <p className="mb-4 text-xs text-t-muted">
                       <strong className="text-t-ink">Ideal For:</strong>{" "}
-                      {activeProduct.idealFor}
+                      {activeDisplay.idealFor}
                     </p>
                     <button
                       type="button"
                       onClick={() =>
-                        onEnquire(`Product Inquiry: ${activeProduct.title}`)
+                        onEnquire(`Product Inquiry: ${activeDisplay.title}`)
                       }
                       className="flex w-full items-center justify-center gap-2 rounded-full bg-t-accent px-6 py-3.5 text-xs font-semibold uppercase tracking-wider text-t-accent-fg transition hover:bg-t-accent-hover"
                     >
@@ -209,11 +255,15 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
         <div className="no-scrollbar mt-6 flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory">
           {PRODUCTS_DATA.map((prod, idx) => {
             const isSelected = idx === activeIdx;
+            const thumb =
+              isSelected && prod.variants && prod.variants[activeVariantIdx]
+                ? prod.variants[activeVariantIdx]
+                : prod;
             return (
               <button
                 key={prod.id}
                 type="button"
-                onClick={() => setActiveIdx(idx)}
+                onClick={() => handleSelectProduct(idx)}
                 className={`snap-start group relative flex min-w-[230px] sm:min-w-[250px] flex-1 items-center gap-3.5 overflow-hidden rounded-2xl border p-3 text-left transition-all ${
                   isSelected
                     ? "border-t-accent bg-t-accent-soft shadow-sm"
@@ -222,29 +272,36 @@ export default function ProductsSection({ onEnquire }: ProductsSectionProps) {
               >
                 <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-xl bg-black">
                   <Image
-                    src={prod.image}
-                    alt={prod.title}
+                    src={thumb.image}
+                    alt={thumb.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="96px"
                   />
                 </div>
-                <div className="min-w-0">
-                  <span
-                    className={`font-mono text-[10px] font-bold uppercase ${
-                      isSelected ? "text-t-accent" : "text-t-muted"
-                    }`}
-                  >
-                    0{idx + 1} • {prod.pitchRange}
-                  </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1.5">
+                    <span
+                      className={`font-mono text-[10px] font-bold uppercase truncate ${
+                        isSelected ? "text-t-accent" : "text-t-muted"
+                      }`}
+                    >
+                      {String(idx + 1).padStart(2, "0")} • {thumb.pitchRange}
+                    </span>
+                    {prod.variants && prod.variants.length > 1 && (
+                      <span className="shrink-0 rounded-full border border-t-border bg-t-surface px-1.5 py-0.5 font-mono text-[9px] font-bold text-t-muted">
+                        {prod.variants.length}×
+                      </span>
+                    )}
+                  </div>
                   <p className="truncate text-xs font-bold text-t-ink">
-                    {prod.title}
+                    {thumb.title}
                   </p>
                 </div>
 
                 {isSelected && !isPaused && (
                   <span
-                    key={`prod-bar-${activeIdx}`}
+                    key={`prod-bar-${activeIdx}-${activeVariantIdx}`}
                     className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] bg-t-accent animate-progress-4500"
                   />
                 )}

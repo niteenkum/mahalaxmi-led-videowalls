@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
+import { THEMES } from "@/data/themes";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
@@ -15,6 +16,28 @@ import Footer from "@/components/Footer";
 
 export default function HomeShowcase() {
   const [selectedRequirement, setSelectedRequirement] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/theme", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { themeId?: string } | null) => {
+        if (cancelled) return;
+        const themeId =
+          data?.themeId && THEMES.some((t) => t.id === data.themeId)
+            ? data.themeId
+            : "obsidian-mono";
+        document.documentElement.setAttribute("data-theme", themeId);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          document.documentElement.setAttribute("data-theme", "obsidian-mono");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleSelectAndScroll = (text: string) => {
     setSelectedRequirement(text);

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Building2, Factory, MapPin } from "lucide-react";
 import {
   VISIONARIES_TEAM,
@@ -114,7 +115,7 @@ export default function AboutSection() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 md:grid-cols-3">
             {VISIONARIES_TEAM.map((member, i) => (
               <div
                 key={member.name}
@@ -122,8 +123,14 @@ export default function AboutSection() {
               >
                 <span className="pointer-events-none absolute inset-x-0 top-0 h-1 scale-x-0 bg-t-accent transition-transform duration-300 origin-left group-hover:scale-x-100" />
                 <div className="flex items-center justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-t-accent font-display text-lg font-bold text-t-accent-fg transition group-hover:scale-105">
-                    {member.initials}
+                  <div className="relative h-16 w-16 overflow-hidden rounded-full border-2 border-t-accent bg-t-card shadow-sm transition group-hover:scale-105">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-top"
+                      sizes="64px"
+                    />
                   </div>
                   <span className="font-mono text-[11px] font-bold text-t-muted">
                     0{i + 1}

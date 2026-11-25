@@ -18,13 +18,47 @@ export default function ScreenCalculator({
 
   const recommendedPitch = (() => {
     if (environment === "indoor") {
-      if (distanceM <= 3) return { label: "P1.86", mm: 1.86, nits: "800 Nits" };
-      if (distanceM <= 6) return { label: "P2.5", mm: 2.5, nits: "1,000 Nits" };
-      return { label: "P4.0", mm: 4.0, nits: "1,200 Nits" };
+      if (distanceM <= 3)
+        return {
+          label: "P1.86",
+          mm: 1.86,
+          nits: "800 Nits",
+          image: "/images/app-control-room.jpg",
+        };
+      if (distanceM <= 6)
+        return {
+          label: "P2.5",
+          mm: 2.5,
+          nits: "1,000 Nits",
+          image: "/images/indoor-led-showroom.jpg",
+        };
+      return {
+        label: "P4.0",
+        mm: 4.0,
+        nits: "1,200 Nits",
+        image: "/images/app-retail-mall.jpg",
+      };
     }
-    if (distanceM <= 6) return { label: "P4.0", mm: 4.0, nits: "5,500 Nits" };
-    if (distanceM <= 12) return { label: "P6.67", mm: 6.67, nits: "6,500 Nits" };
-    return { label: "P10.0", mm: 10.0, nits: "7,000 Nits" };
+    if (distanceM <= 6)
+      return {
+        label: "P4.0",
+        mm: 4.0,
+        nits: "5,500 Nits",
+        image: "/images/outdoor-3d-billboard.jpg",
+      };
+    if (distanceM <= 12)
+      return {
+        label: "P6.67",
+        mm: 6.67,
+        nits: "6,500 Nits",
+        image: "/images/hero-flagship-wall.jpg",
+      };
+    return {
+      label: "P10.0",
+      mm: 10.0,
+      nits: "7,000 Nits",
+      image: "/images/prod-digital-billboard.jpg",
+    };
   })();
 
   const resX = Math.round((widthFt * 304.8) / recommendedPitch.mm);
@@ -32,9 +66,9 @@ export default function ScreenCalculator({
   const areaSqFt = widthFt * heightFt;
   const estCabinets = Math.max(4, Math.round(areaSqFt / 2.7));
 
-  const scale = Math.min(250 / widthFt, 140 / heightFt);
-  const previewW = Math.max(64, Math.round(widthFt * scale));
-  const previewH = Math.max(42, Math.round(heightFt * scale));
+  // Direct smooth percentage scaling across the full stage (4–50 ft width -> 24%–100%, 3–30 ft height -> 28%–100%)
+  const widthPct = Math.round(24 + ((widthFt - 4) / (50 - 4)) * 76);
+  const heightPct = Math.round(28 + ((heightFt - 3) / (30 - 3)) * 72);
 
   const configSummary = `${environment.toUpperCase()} ${widthFt}ft × ${heightFt}ft (${areaSqFt} sq.ft, ~${estCabinets} cabinets) — Recommended ${recommendedPitch.label}`;
 
@@ -139,23 +173,22 @@ export default function ScreenCalculator({
 
             <div className="bg-t-stage p-8 sm:p-12 text-white lg:col-span-5 flex flex-col justify-between">
               <div className="space-y-6">
-                <div className="relative flex h-48 items-center justify-center rounded-2xl border border-white/10 bg-t-stage-card p-4 overflow-hidden">
+                <div className="relative flex h-56 sm:h-60 w-full items-center justify-center rounded-2xl border border-white/10 bg-t-stage-card p-4 overflow-hidden">
                   <div
-                    style={{ width: previewW, height: previewH }}
-                    className="relative overflow-hidden rounded-md border-2 border-t-stage-accent shadow-lg transition-all duration-200 flex items-center justify-center"
+                    style={{
+                      width: `${widthPct}%`,
+                      height: `${heightPct}%`,
+                    }}
+                    className="relative overflow-hidden rounded-xl border-2 border-t-stage-accent shadow-lg transition-all duration-200 ease-out flex items-center justify-center"
                   >
                     <Image
-                      src={
-                        environment === "indoor"
-                          ? "/images/indoor-led-showroom.jpg"
-                          : "/images/outdoor-3d-billboard.jpg"
-                      }
-                      alt="Scaled LED Wall Preview"
+                      src={recommendedPitch.image}
+                      alt={`${environment} LED Wall Preview`}
                       fill
-                      className="object-cover opacity-80"
-                      sizes="260px"
+                      className="object-cover object-center transition-opacity duration-300"
+                      sizes="480px"
                     />
-                    <span className="relative z-10 rounded bg-black/75 px-2 py-0.5 font-mono text-[11px] font-bold text-white backdrop-blur-xs">
+                    <span className="relative z-10 rounded-md bg-black/75 px-2.5 py-1 font-mono text-xs font-bold text-white backdrop-blur-xs">
                       {widthFt}′ × {heightFt}′
                     </span>
                   </div>

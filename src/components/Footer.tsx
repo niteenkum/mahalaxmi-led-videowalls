@@ -8,14 +8,15 @@ export default function Footer() {
       <div className="mx-auto max-w-[1440px] px-5 pt-14 pb-10 sm:px-8 lg:px-12">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
           <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="relative h-9 w-9 overflow-hidden rounded-lg bg-white p-0.5">
+            <div className="flex items-center gap-3.5">
+              <div className="relative h-12 w-36 shrink-0 overflow-hidden rounded-xl border border-white/15 bg-black">
                 <Image
                   src="/images/logo.png"
-                  alt="Mahalaxmi LED Video Walls Logo"
+                  alt="Mahalaxmi Visuals Private Limited — LED Video Walls"
                   fill
-                  className="object-contain p-0.5"
-                  sizes="36px"
+                  unoptimized
+                  className="object-contain"
+                  sizes="144px"
                 />
               </div>
               <p className="font-display text-base font-bold tracking-[0.14em] uppercase text-white">
@@ -23,8 +24,9 @@ export default function Footer() {
               </p>
             </div>
             <p className="max-w-md text-xs leading-relaxed text-zinc-400">
-              L-Shaped Outdoor Displays • Indoor Fixed LEDs • Digital Standees •
-              Digital Billboards • Transparent LED Video Walls
+              Curved / Flexible Outdoor Displays • Indoor Fixed LEDs • Outdoor
+              &amp; Indoor Standees • Pole Mounting Screens • Digital Billboards
+              • Drone &amp; Mobile Van LED Walls
             </p>
             <p className="font-mono text-[11px] text-zinc-500">
               {CONTACT_INFO.email} • {CONTACT_INFO.phones.join(" / ")}

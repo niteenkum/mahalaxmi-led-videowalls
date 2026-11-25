@@ -15,6 +15,7 @@ import {
   LogOut,
 } from "lucide-react";
 import type { Inquiry, InquiryStatus } from "@/lib/inquiriesStore";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const STATUS_OPTIONS: InquiryStatus[] = ["new", "contacted", "quoted", "closed"];
 
@@ -111,6 +112,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-2.5">
+            <ThemeSwitcher />
             <button
               type="button"
               onClick={fetchInquiries}

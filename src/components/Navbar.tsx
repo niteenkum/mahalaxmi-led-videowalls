@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
@@ -23,14 +22,14 @@ export default function Navbar() {
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
         {/* Brand Identity */}
         <a href="#home" className="flex items-center group shrink-0">
-          <div className="relative h-12 w-24 shrink-0 overflow-hidden transition group-hover:scale-105">
+          <div className="relative h-11 w-[132px] sm:h-12 sm:w-36 shrink-0 overflow-hidden rounded-xl bg-black border border-t-border/60 shadow-xs transition group-hover:scale-[1.03]">
             <Image
               src="/images/logo.png"
-              alt="Mahalaxmi LED Video Walls Logo"
+              alt="Mahalaxmi Visuals Private Limited — LED Video Walls"
               fill
               unoptimized
               className="object-contain"
-              sizes="96px"
+              sizes="144px"
             />
           </div>
         </a>
@@ -48,10 +47,8 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right: 16-Theme Switcher + CTA */}
+        {/* Right: CTA */}
         <div className="flex items-center gap-2.5">
-          <ThemeSwitcher />
-
           <a
             href="#contact"
             className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-t-accent px-5 py-2.5 text-xs font-semibold tracking-wide text-t-accent-fg transition hover:bg-t-accent-hover"

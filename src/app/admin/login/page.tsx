@@ -54,14 +54,14 @@ export default function AdminLoginPage() {
 
       <div className="mx-auto w-full max-w-md rounded-[2.25rem] border border-t-border bg-t-card p-8 sm:p-10 shadow-2xl">
         <div className="flex items-center justify-between">
-          <div className="relative h-11 w-22 overflow-hidden">
+          <div className="relative h-11 w-[132px] shrink-0 overflow-hidden rounded-xl border border-t-border/60 bg-black">
             <Image
               src="/images/logo.png"
-              alt="Mahalaxmi LED Video Walls"
+              alt="Mahalaxmi Visuals Private Limited — LED Video Walls"
               fill
               unoptimized
-              className="object-contain object-left"
-              sizes="88px"
+              className="object-contain"
+              sizes="132px"
             />
           </div>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-t-accent-soft px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-t-accent">

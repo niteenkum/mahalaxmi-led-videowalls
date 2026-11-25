@@ -21,12 +21,14 @@ const MAP_QUERIES = [
 ];
 
 const QUICK_CHIPS = [
-  "L-Shaped 3D Outdoor",
+  "Curved / Flexible Outdoor",
   "Indoor Fixed Wall",
+  "Outdoor Pole Screen",
   "Digital Billboard",
+  "Outdoor Standee",
+  "Drone LED Wall",
+  "Mobile Van LED",
   "Transparent LED",
-  "Digital Standee",
-  "Stage Rental",
 ];
 
 interface ContactSectionProps {
