@@ -9,14 +9,14 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
           <div className="space-y-2">
             <div className="flex items-center gap-3.5">
-              <div className="relative h-12 w-36 shrink-0 overflow-hidden rounded-xl border border-white/15 bg-black">
+              <div className="relative h-14 w-[84px] shrink-0 overflow-hidden rounded-xl border border-white/15 bg-black">
                 <Image
                   src="/images/logo.png"
                   alt="Mahalaxmi Visuals Private Limited — LED Video Walls"
                   fill
                   unoptimized
-                  className="object-contain"
-                  sizes="144px"
+                  className="object-contain p-0.5"
+                  sizes="84px"
                 />
               </div>
               <p className="font-display text-base font-bold tracking-[0.14em] uppercase text-white">

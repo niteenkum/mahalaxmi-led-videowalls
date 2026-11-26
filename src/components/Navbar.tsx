@@ -22,14 +22,14 @@ export default function Navbar() {
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
         {/* Brand Identity */}
         <a href="#home" className="flex items-center group shrink-0">
-          <div className="relative h-11 w-[132px] sm:h-12 sm:w-36 shrink-0 overflow-hidden rounded-xl bg-black border border-t-border/60 shadow-xs transition group-hover:scale-[1.03]">
+          <div className="relative h-12 w-[72px] sm:h-14 sm:w-[84px] shrink-0 overflow-hidden rounded-xl bg-black border border-t-border/60 shadow-xs transition group-hover:scale-[1.03]">
             <Image
               src="/images/logo.png"
               alt="Mahalaxmi Visuals Private Limited — LED Video Walls"
               fill
               unoptimized
-              className="object-contain"
-              sizes="144px"
+              className="object-contain p-0.5"
+              sizes="84px"
             />
           </div>
         </a>
