@@ -18,29 +18,29 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-t-border/80 bg-t-bg/90 backdrop-blur-xl text-t-ink transition-colors">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black text-white transition-colors">
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
-        {/* Brand Identity */}
+        {/* Brand Identity — Seamless on Dark Black Background */}
         <a href="#home" className="flex items-center group shrink-0">
-          <div className="relative h-12 w-[72px] sm:h-14 sm:w-[84px] shrink-0 overflow-hidden rounded-xl bg-black border border-t-border/60 shadow-xs transition group-hover:scale-[1.03]">
+          <div className="relative h-14 w-[84px] sm:h-16 sm:w-[96px] shrink-0 overflow-hidden transition group-hover:scale-[1.03]">
             <Image
               src="/images/logo.png"
               alt="Mahalaxmi Visuals Private Limited — LED Video Walls"
               fill
               unoptimized
-              className="object-contain p-0.5"
-              sizes="84px"
+              className="object-contain"
+              sizes="96px"
             />
           </div>
         </a>
 
         {/* Clean Center Navigation */}
-        <nav className="hidden xl:flex items-center gap-1 rounded-full border border-t-border bg-t-surface px-2 py-1.5">
+        <nav className="hidden xl:flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.06] px-2 py-1.5">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="rounded-full px-3 py-1.5 text-[13px] font-medium text-t-muted transition hover:bg-t-card hover:text-t-ink hover:shadow-xs"
+              className="rounded-full px-3 py-1.5 text-[13px] font-medium text-zinc-300 transition hover:bg-white/15 hover:text-white"
             >
               {link.label}
             </a>
@@ -51,7 +51,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2.5">
           <a
             href="#contact"
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-t-accent px-5 py-2.5 text-xs font-semibold tracking-wide text-t-accent-fg transition hover:bg-t-accent-hover"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-t-stage-accent px-5 py-2.5 text-xs font-semibold tracking-wide text-t-stage-accent-fg transition opacity-95 hover:opacity-100"
           >
             Get Quote
             <ArrowUpRight className="h-3.5 w-3.5" />
@@ -60,7 +60,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="xl:hidden rounded-xl border border-t-border bg-t-surface p-2.5 text-t-ink"
+            className="xl:hidden rounded-xl border border-white/15 bg-white/[0.06] p-2.5 text-white"
             aria-label="Toggle menu"
           >
             {mobileOpen ? (
@@ -73,13 +73,13 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="xl:hidden border-t border-t-border bg-t-bg px-5 py-6 space-y-2 shadow-xl">
+        <div className="xl:hidden border-t border-white/10 bg-black px-5 py-6 space-y-2 shadow-xl">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="block rounded-xl px-4 py-2.5 text-sm font-medium text-t-muted hover:bg-t-surface hover:text-t-ink"
+              className="block rounded-xl px-4 py-2.5 text-sm font-medium text-zinc-300 hover:bg-white/10 hover:text-white"
             >
               {link.label}
             </a>
@@ -88,7 +88,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center gap-2 rounded-full bg-t-accent py-3 text-sm font-semibold text-t-accent-fg"
+              className="flex items-center justify-center gap-2 rounded-full bg-t-stage-accent py-3 text-sm font-semibold text-t-stage-accent-fg"
             >
               Get Quote
               <ArrowUpRight className="h-4 w-4" />
