@@ -14,14 +14,28 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  onLogoClick?: () => void;
+}
+
+export default function Navbar({ onLogoClick }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black text-white transition-colors">
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
         {/* Brand Identity — Seamless on Dark Black Background */}
-        <a href="#home" className="flex items-center group shrink-0">
+        <a
+          href="#home"
+          onClick={(e) => {
+            if (onLogoClick) {
+              e.preventDefault();
+              setMobileOpen(false);
+              onLogoClick();
+            }
+          }}
+          className="flex items-center group shrink-0"
+        >
           <div className="relative h-14 w-[84px] sm:h-16 sm:w-[96px] shrink-0 overflow-hidden transition group-hover:scale-[1.03]">
             <Image
               src="/images/logo.png"

@@ -1,15 +1,30 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { CONTACT_INFO } from "@/data/mahalaxmiContent";
 
-export default function Footer() {
+interface FooterProps {
+  onLogoClick?: () => void;
+}
+
+export default function Footer({ onLogoClick }: FooterProps) {
   return (
     <footer className="border-t border-white/10 bg-t-stage text-zinc-400">
       <div className="mx-auto max-w-[1440px] px-5 pt-14 pb-10 sm:px-8 lg:px-12">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
           <div className="space-y-2">
-            <div className="flex items-center gap-3.5">
-              <div className="relative h-14 w-[84px] shrink-0 overflow-hidden rounded-xl bg-black">
+            <a
+              href="#home"
+              onClick={(e) => {
+                if (onLogoClick) {
+                  e.preventDefault();
+                  onLogoClick();
+                }
+              }}
+              className="inline-flex items-center gap-3.5 group"
+            >
+              <div className="relative h-14 w-[84px] shrink-0 overflow-hidden rounded-xl bg-black transition group-hover:scale-[1.03]">
                 <Image
                   src="/images/logo.png"
                   alt="Mahalaxmi Visuals Private Limited — LED Video Walls"
@@ -22,7 +37,7 @@ export default function Footer() {
               <p className="font-display text-base font-bold tracking-[0.14em] uppercase text-white">
                 Mahalaxmi LED Video Walls
               </p>
-            </div>
+            </a>
             <p className="max-w-md text-xs leading-relaxed text-zinc-400">
               Curved / Flexible Outdoor Displays • Indoor Fixed LEDs • Outdoor
               &amp; Indoor Standees • Pole Mounting Screens • Digital Billboards

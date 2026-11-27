@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { THEMES } from "@/data/themes";
 import Navbar from "@/components/Navbar";
+import LogoPreloader from "@/components/LogoPreloader";
 import HeroSection from "@/components/HeroSection";
 import ProductsSection from "@/components/ProductsSection";
 import ApplicationsSection from "@/components/ApplicationsSection";
@@ -16,6 +17,25 @@ import Footer from "@/components/Footer";
 
 export default function HomeShowcase() {
   const [selectedRequirement, setSelectedRequirement] = useState("");
+  const [showLoader, setShowLoader] = useState(true);
+  const [loaderKey, setLoaderKey] = useState(0);
+
+  useEffect(() => {
+    if (!showLoader) return;
+    const timer = setTimeout(() => {
+      setShowLoader(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [showLoader, loaderKey]);
+
+  const handleLogoReload = () => {
+    setLoaderKey((k) => k + 1);
+    setShowLoader(true);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    if (window.location.hash !== "#home") {
+      window.history.replaceState(null, "", "#home");
+    }
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -49,7 +69,8 @@ export default function HomeShowcase() {
 
   return (
     <div className="min-h-screen flex flex-col bg-t-bg text-t-ink transition-colors">
-      <Navbar />
+      <LogoPreloader visible={showLoader} runKey={loaderKey} />
+      <Navbar onLogoClick={handleLogoReload} />
       <main className="flex-1">
         <HeroSection />
         <ProductsSection onEnquire={handleSelectAndScroll} />
@@ -60,7 +81,7 @@ export default function HomeShowcase() {
         <AboutSection />
         <ContactSection selectedRequirement={selectedRequirement} />
       </main>
-      <Footer />
+      <Footer onLogoClick={handleLogoReload} />
 
       {/* Theme-Aware Floating WhatsApp Concierge Pill */}
       <a
